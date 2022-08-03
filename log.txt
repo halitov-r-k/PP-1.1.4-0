@@ -1,0 +1,5 @@
+https://javarush.ru/groups/posts/2251-znakomstvo-s-maven-spring-mysql-hibernate-i-pervoe-crud-prilozhenie-chastjh-3
+Создание базы данных: dbTaskJDBC
+user: root
+password: root
+
