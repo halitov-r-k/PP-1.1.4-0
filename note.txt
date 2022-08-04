@@ -1,0 +1,26 @@
+https://javarush.ru/groups/posts/2251-znakomstvo-s-maven-spring-mysql-hibernate-i-pervoe-crud-prilozhenie-chastjh-3
+Создание базы данных: dbTaskJDBC
+user: root
+password: root
+url: jdbc:mysql://localhost:3306/dbTaskJDBC
+driver: com.mysql.cj.jdbc.Driver
+
+Конфигурационные файлы, Файлы свойств (Properties Files)
+Properties Files - предназначены, для того чтобы хранить в них статические данные необходимые project.
+Создать Property-file database.properties.
+Записать в него данные в формате: Ключ = значение.
+Ключ(key) это уникальное имя, по которому можно получить доступ к значению, хранимому под этим ключом.
+Значение(value) это текст|число, необходимое для выполнения определённой логики в вашей программе.
+Создаем входной поток (inputStream) type: FileInputStream|InputStream для чтения данных(data) from database.properties.
+Cоздаем Properties-object: .
+Класс Properties представляет постоянный набор свойств.
+Свойства можно сохранить в поток или загрузить из потока.
+Каждый ключ и соответствующее ему значение в списке свойств — это строка.
+
+//в конструкции try..catch
+inputStream присваиваем значение:
+    inputStream = new FileInputStream("src/main/resources/database.properties");
+     |
+    inputStream = new Files.newInputStream(Paths.get("database.properties"));
+Считываем data from  inputStream in  properties:  property.load(inputStream).
+Получаем value: properties.getProperty("key").
