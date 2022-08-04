@@ -24,3 +24,32 @@ inputStream присваиваем значение:
     inputStream = new Files.newInputStream(Paths.get("database.properties"));
 Считываем data from  inputStream in  properties:  property.load(inputStream).
 Получаем value: properties.getProperty("key").
+
+Подключение к db
+ Указываем путь к драйверу.
+ Сlass.forName( properties.getProperty("driver")).getDeclaredConstructor().newInstance();
+
+Класс DriverManager является уровнем управления JDBC,
+отслеживает все доступные драйверы и управляет установлением соединений между БД и соответствующим драйвером.
+Чтобы сказать диспетчеру драйверов JDBC, какой именно драйвер следует загрузить, необходимо выполнить одну из команд :
+    Class.forName(“полное имя класса”)
+    Class.forName(“полное имя класса”).newInstance()
+    DriverManager.registerDriver(new “полное имя класса”)
+Команды все равнозначны. Задача заключается в том, чтобы classloader загрузил нужный драйвер.
+Устанавливать соединения с БД можно сразу после регистрации драйвера JDBC.
+Для этого следует вызвать метод DriverManager.getConnection, которому передаются параметры соединения с БД.
+DriverManager опрашивает каждый зарегистрированный драйвер с целью определения,
+какой из них может установить данное соединение.
+Может оказаться, что установить соединение согласно параметрам URL могут более одного драйвера JDBC.
+В этом случае важен порядок, в котором происходит этот опрос, так как DriverManager будет использовать первый драйвер,
+откликнувшийся на URL.
+
+Создаем сееанс в конструкции try..catch:
+ Connection connection = DriverManager.getConnection(url, user, password);
+
+Работа с базой данных
+
+Для взаимодействия с базой данных приложение отправляет серверу MySQL команды на языке SQL.
+Чтобы выполнить команду, вначале необходимо создать объект Statement.
+Для его создания у объекта Connection вызывается метод createStatement():
+Statement statement = connection.createStatement();

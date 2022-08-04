@@ -15,23 +15,23 @@ public class Util {
     static Logger LOGGER = Logger.getLogger(Util.class.getName());
     // реализуйте настройку соединения с БД
     public static Connection getConnection() {
-        LOGGER.log(Level.INFO,"Подключение к базе данных");
-        //читаем свойства для подключения к db
+        LOGGER.log(Level.INFO,"Метод getConnection(): Подключение к базе данных");
+
         Properties properties = new Properties();
         InputStream inputStream;
         try {
             inputStream = Files.newInputStream(Paths.get("database.properties"));
             properties.load(inputStream);
-            LOGGER.log(Level.INFO, "Свойства подключения считаны в файл");
+            LOGGER.log(Level.INFO, "Свойства подключения считаны в properties-object");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
         try {
             Class.forName( properties.getProperty("driver")).getDeclaredConstructor().newInstance();
-            LOGGER.log(Level.INFO, "Объект драйвера создан");
+            LOGGER.log(Level.INFO, "Путь к драйверу установлен");
         } catch (Exception e) {
-            LOGGER.log(Level.INFO, "Объект драйвера не создан");
+            LOGGER.log(Level.INFO, "Ошибка установления пути к драйверу");
         }
 
         Connection connection;
