@@ -3,9 +3,15 @@ package jm.task.core.jdbc.dao;
 import jm.task.core.jdbc.model.User;
 import jm.task.core.jdbc.util.Util;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import static jm.task.core.jdbc.util.Util.closeConnection;
+import static jm.task.core.jdbc.util.Util.getConnection;
 
 public class UserDaoJDBCImpl implements UserDao {
     static Logger LOGGER = Logger.getLogger(UserDaoJDBCImpl.class.getName());
@@ -13,9 +19,21 @@ public class UserDaoJDBCImpl implements UserDao {
 
     }
 
-    public void createUsersTable() {
+     public void createUsersTable() {
         LOGGER.log(Level.INFO,"Create Table Users ");
+        Connection connection = getConnection();
+        try {
+            Statement statement = connection.createStatement();
+            String requestSQL = "CREATE TABLE IF NOT EXISTS users (Id BIGINT PRIMARY KEY AUTO_INCREMENT, name VARCHAR(50), lastname VARCHAR(50), age TINYINT)";
+            statement.executeUpdate(requestSQL);
+            LOGGER.log(Level.INFO,"Таблица Users создана ");
+        } catch (SQLException e) {
+            LOGGER.log(Level.INFO,"Таблица Users не создана ");
+            throw new RuntimeException(e);
+        }
+        closeConnection(connection);
     }
+
 
     public void dropUsersTable() {
         LOGGER.log(Level.INFO,"Drop Table Users ");
