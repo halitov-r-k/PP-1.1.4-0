@@ -5,5 +5,6 @@ public class TestUserDAOJDBCIml {
     public static void main(String[] args) {
         UserDao userDao = new UserDaoJDBCImpl();
         userDao.createUsersTable();
+        userDao.dropUsersTable();
     }
 }

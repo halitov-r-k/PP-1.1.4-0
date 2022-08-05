@@ -26,9 +26,9 @@ public class UserDaoJDBCImpl implements UserDao {
             Statement statement = connection.createStatement();
             String requestSQL = "CREATE TABLE IF NOT EXISTS users (Id BIGINT PRIMARY KEY AUTO_INCREMENT, name VARCHAR(50), lastname VARCHAR(50), age TINYINT)";
             statement.executeUpdate(requestSQL);
-            LOGGER.log(Level.INFO,"Таблица Users создана ");
+            LOGGER.log(Level.INFO,"Таблица users создана ");
         } catch (SQLException e) {
-            LOGGER.log(Level.INFO,"Таблица Users не создана ");
+            LOGGER.log(Level.INFO,"Ошибка создания таблицы users");
             throw new RuntimeException(e);
         }
         closeConnection(connection);
@@ -37,6 +37,17 @@ public class UserDaoJDBCImpl implements UserDao {
 
     public void dropUsersTable() {
         LOGGER.log(Level.INFO,"Drop Table Users ");
+        Connection connection = getConnection();
+        try {
+            Statement statement = connection.createStatement();
+            String requestSQL = "DROP TABLE IF EXISTS users";
+            statement.executeUpdate(requestSQL);
+            LOGGER.log(Level.INFO,"Таблица users  удалена");
+        } catch (SQLException e) {
+            LOGGER.log(Level.INFO,"Ошибка удаления таблицы users ");
+            throw new RuntimeException(e);
+        }
+        closeConnection(connection);
     }
 
     public void saveUser(String name, String lastName, byte age) {
