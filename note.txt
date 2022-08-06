@@ -75,3 +75,21 @@ execute():
     выполняет любые команды и возвращает значение boolean:
     true - если команда возвращает набор строк (SELECT),
     иначе возвращается false.
+
+PreparedStatement
+этот класс позволяет подготовить запрос, отформатировать его должным образом
+ Для создания объекта PreparedStatement применяется метод prepareStatement() класса Connection.
+  В этот метод передается выражение sql INSERT INTO Products (ProductName, Price) Values (?, ?).
+   Это выражение может содержать знаки вопроса ? - знаки подстановки, вместо которых будут вставляться реальные значения.
+Чтобы связать отдельные знаки подстановки с конкретными значениями
+ у класса PreparedStatement определен ряд методов для различных типов данных.
+  Все методы, которые поставляют значения вместо знаков подстановки,
+  в качестве первого параметра принимают порядковый номер знака подстановки (нумерация начинается с 1),
+  а в качестве второго параметра - собственно значение, которое вставляется вместо знака подстановки.
+
+   String requestSQL = "INSERT users(name, lastname, age) VALUES(?, ?, ?) ";
+   PreparedStatement preparedStatement = connection.prepareStatement(requestSQL);
+   preparedStatement.setString(1, name);
+   preparedStatement.setString(2, lastName);
+   preparedStatement.setByte(3, age);
+   preparedStatement.executeUpdate();

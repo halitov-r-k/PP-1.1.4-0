@@ -14,7 +14,7 @@ import java.util.logging.Logger;
 public class Util {
     static Logger LOGGER = Logger.getLogger(Util.class.getName());
     // реализуйте настройку соединения с БД
-    public static Connection getConnection() {
+    public Connection getConnection() {
         LOGGER.log(Level.INFO,"Метод getConnection(): Подключение к базе данных");
 
         Properties properties = new Properties();
@@ -34,7 +34,7 @@ public class Util {
             LOGGER.log(Level.INFO, "Ошибка установления пути к драйверу");
         }
 
-        Connection connection;
+      Connection connection;
         try {
             connection = DriverManager.getConnection(
                     properties.getProperty("url"),
@@ -47,7 +47,9 @@ public class Util {
         }
         return connection;
     }
-    public static void closeConnection(Connection connection) {
+    public void closeConnection() {
+        //public void closeConnection(Connection connection) {
+        Connection connection = getConnection();
         if (connection != null) {
             try {
                 connection.close();
