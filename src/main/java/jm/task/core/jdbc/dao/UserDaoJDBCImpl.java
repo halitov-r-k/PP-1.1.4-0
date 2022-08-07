@@ -30,7 +30,6 @@ public class UserDaoJDBCImpl implements UserDao {
         }
     }
 
-
     public void dropUsersTable() {
         LOGGER.log(Level.INFO,"Drop Table Users ");
         String requestSQL = "DROP TABLE IF EXISTS users";
@@ -61,7 +60,17 @@ public class UserDaoJDBCImpl implements UserDao {
     }
 
     public void removeUserById(long id) {
-        LOGGER.log(Level.INFO,"Remove User By Id ");
+        LOGGER.log(Level.INFO,"Удаление user по id");
+        try {
+            String requestSQL = "DELETE FROM users WHERE Id = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(requestSQL);
+            preparedStatement.setLong(1, id);
+            preparedStatement.executeUpdate();
+            LOGGER.log(Level.INFO,"user c id {0} удален из таблицы", id);
+        } catch (SQLException e) {
+            LOGGER.log(Level.INFO,"Ошибка удаления записи");
+            throw new RuntimeException(e);
+        }
     }
 
     public List<User> getAllUsers() {
@@ -99,6 +108,5 @@ public class UserDaoJDBCImpl implements UserDao {
             LOGGER.log(Level.INFO,"Ошибка очистки таблицы users");
             throw new RuntimeException(e);
         }
-
     }
 }
