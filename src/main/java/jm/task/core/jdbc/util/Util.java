@@ -29,13 +29,17 @@ public class Util {
         return properties;
     }
     //Подключение к db
-    private static Connection connection;
-    public static Connection getConnection() {
-        try { connection = DriverManager.getConnection(
-                properties.getProperty("url"),
-                properties.getProperty("user"),
-                properties.getProperty("password"));
+  public static Connection connection;
+    public static  Connection getConnection() {
+
+        try {
+            connection = DriverManager.getConnection(
+                    properties.getProperty("url"),
+                    properties.getProperty("user"),
+                    properties.getProperty("password")) ;
+
             LOGGER.log(Level.INFO, "Соединение установлено");
+            return connection;
         } catch (SQLException e) {
             LOGGER.log(Level.WARNING, "Соединение не установлено: {0}", e.getMessage() );
         }

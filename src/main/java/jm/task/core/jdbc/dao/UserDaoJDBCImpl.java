@@ -48,9 +48,9 @@ public class UserDaoJDBCImpl implements UserDao {
             System.out.printf("User с именем – %s добавлен в базу данных \n", name);
         } catch (SQLException e) {
             LOGGER.log(Level.WARNING,"Ошибка Добавления записи: {0}", e.getMessage());
-        } finally {
+        } /*finally {
             close();
-        }
+        }*/
     }
 
     public void removeUserById(long id) {
@@ -91,7 +91,7 @@ public class UserDaoJDBCImpl implements UserDao {
         return users;
     }
     public void cleanUsersTable() {
-        LOGGER.log(Level.INFO,"Clean Table Users ");
+        LOGGER.log(Level.INFO,"Очистка таблицы users");
         String requestSQL = "TRUNCATE TABLE users";
         try (Statement statement = getConnection().createStatement()) {
             statement.executeUpdate(requestSQL);
