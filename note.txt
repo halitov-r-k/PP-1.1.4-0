@@ -1,3 +1,61 @@
+Hibernate
+SessionFactory
+
+Поточно-ориентированное (и неизменное) представление сопоставления модели предметной области приложения с базой данных.
+Действует как фабрика для экземпляров org.hibernate.Session.
+EntityManagerFactory — это Jakarta Persistence, эквивалентный SessionFactory, и в основном эти два сходятся в одной и той же реализации SessionFactory.
+
+Создание SessionFactory обходится очень дорого, поэтому для любой конкретной базы данных приложение должно иметь только одну связанную SessionFactory.
+SessionFactory поддерживает службы, которые Hibernate использует во всех сеансах, такие как кэши второго уровня, пулы соединений, интеграция системы транзакций и т. д.
+
+Добавление конфигурационного файла:
+Меню File : выбрать пункт ProjectStructure, выбрать пункт Modules, во второй колонке в меню выбрать "+" (Add),
+выбрать модуль Hibernate. В третьей колонке "+" (Add) hibernate.cfg.xml
+по пути /home/user/IdeaProjects/PP-1_1_4/src/main/resources/hibernate.cfg.xml
+
+==============================================================================
+?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+    "-//Hibernate/Hibernate Configuration DTD//EN"
+    "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory>
+    <property name="connection.url">jdbc:mysql://localhost:3306/dbTaskJDBC</property>
+    <property name="connection.driver_class">com.mysql.cj.jdbc.Driver</property>
+    <property name="connection.username">root</property>
+    <property name="connection.password">root</property>
+    <property name="connection.dialect">org.hibernate.dialect.MySQLDialect</property>
+
+    <!-- DB schema will be updated if needed -->
+    <!-- <property name="hibernate.hbm2ddl.auto">update</property> -->
+  </session-factory>
+</hibernate-configuration>
+========================================================================
+
+Создание SessionFactory
+
+Configuration configuration = new Configuration();
+//получаем путь к файлу настроек
+configuration.configure();
+//по умолчанию директория resources помеченная как Resources Root или
+configuration.configure("pathTo/hibernate.cfg.xml");
+//получаем SessionFactory из configuration . sessionFactory нужно закрывать
+try (SessionFactory sessionFactory = configuration.buildSessionFactory()) {}
+
+
+Session (org.hibernate.Session)
+
+Однопоточный недолговечный объект, концептуально моделирующий «единицу работы» (PoEAA).
+В номенклатуре Jakarta Persistence сеанс представлен EntityManager.
+За кулисами сеанс Hibernate оборачивает JDBC java.sql.Connection и действует как фабрика для экземпляров org.hibernate.
+
+Получение Session
+
+Session session = sessionFactory.openSession();
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+JDBC
 https://javarush.ru/groups/posts/2251-znakomstvo-s-maven-spring-mysql-hibernate-i-pervoe-crud-prilozhenie-chastjh-3
 Создание базы данных: dbTaskJDBC
 user: root

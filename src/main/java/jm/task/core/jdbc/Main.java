@@ -18,7 +18,7 @@ public class Main {
       */
         UserService userService = new UserServiceImpl();
         userService.createUsersTable();
-        User user1 = new User("Name1", "LastName1", (byte) 91);
+      /*  User user1 = new User("Name1", "LastName1", (byte) 91);
         User user2 = new User("Name2", "LastName2", (byte) 92);
         User user3 = new User("Name3", "LastName3", (byte) 93);
         User user4 = new User("Name4", "LastName4", (byte) 94);
@@ -31,6 +31,6 @@ public class Main {
         userService.getAllUsers();
         userService.cleanUsersTable();
         userService.dropUsersTable();
-
+*/
     }
 }
