@@ -20,7 +20,7 @@ public class Main {
         Удаление таблицы
       */
         UserService userService = new UserServiceImpl();
-        LOGGER.log(Level.INFO, "Cоздание таблицы users");
+        LOGGER.log(Level.INFO, "Создание таблицы users");
         userService.createUsersTable();
         User user1 = new User("Name1", "LastName1", (byte) 91);
         User user2 = new User("Name2", "LastName2", (byte) 92);
@@ -31,13 +31,11 @@ public class Main {
         userService.saveUser (user2.getName(), user2.getLastName(), user2.getAge());
         userService.saveUser (user3.getName(), user3.getLastName(), user3.getAge());
         userService.saveUser (user4.getName(), user4.getLastName(), user4.getAge());
-
         userService.getAllUsers();
         userService.removeUserById(2);
         userService.getAllUsers();
-
-        //userService.cleanUsersTable();
-       // userService.dropUsersTable();
-
+        userService.cleanUsersTable();
+        userService.getAllUsers();
+        userService.dropUsersTable();
     }
 }
