@@ -9,7 +9,7 @@ import java.util.logging.Logger;
 import static jm.task.core.jdbc.util.Util.close;
 import static jm.task.core.jdbc.util.Util.getConnection;
 
-public class UserDaoJDBCImpl implements UserDao {
+public class UserDaoJDBCImpl implemenDROPts UserDao {
     static Logger LOGGER = Logger.getLogger(UserDaoJDBCImpl.class.getName());
      public void createUsersTable() {
         LOGGER.log(Level.INFO,"Создание таблицы users");

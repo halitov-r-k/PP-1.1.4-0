@@ -4,7 +4,8 @@ import jm.task.core.jdbc.model.User;
 import jm.task.core.jdbc.util.Util;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-
+import org.hibernate.query.NativeQuery;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -28,7 +29,12 @@ public class UserDaoHibernateImpl implements UserDao {
     @Override
     public void dropUsersTable() {
         LOGGER.log(Level.INFO, "Удаление таблицы user");
-
+        Session session = Util.getSessionFactory().openSession();
+        Transaction tx1 = session.beginTransaction();
+        NativeQuery<User> nativeQuery = session.createNativeQuery("DROP TABLE IF EXISTS users", User.class);
+        nativeQuery.executeUpdate();
+        tx1.commit();
+        session.close();
     }
 
     @Override
@@ -46,13 +52,32 @@ public class UserDaoHibernateImpl implements UserDao {
     @Override
     public void removeUserById(long id) {
         LOGGER.log(Level.INFO, "Удаление записи из таблицы user по Id");
+        String requestSQL = "DELETE FROM users WHERE Id = " + id;
+        Session session = Util.getSessionFactory().openSession();
+        Transaction tx1 = session.beginTransaction();
+        NativeQuery<User> nativeQuery = session.createNativeQuery(requestSQL, User.class);
+        nativeQuery.executeUpdate();
+        tx1.commit();
+        session.close();
 
     }
 
     @Override
     public List<User> getAllUsers() {
         LOGGER.log(Level.INFO, "Получение всех записей из таблицы user");
-        return null;
+        List<User> users = new ArrayList<>();
+        String requestSQL = "SELECT * FROM users";
+        Session session = Util.getSessionFactory().openSession();
+        Transaction tx1 = session.beginTransaction();
+        NativeQuery nativeQuery = session.createNativeQuery(requestSQL, User.class);
+        users = nativeQuery.getResultList();
+        tx1.commit();
+        session.close();
+        User[] usersArray = users.toArray(new User[users.size()]);
+        for(int i = 0; i < usersArray.length; i++) {
+            System.out.println(usersArray[i]);
+        }
+        return users;
     }
 
     @Override
